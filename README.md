@@ -1,43 +1,34 @@
-// SPDX-License-Identifier: MIT
-pragma solidity >=0.6.12 <0.9.0;
+# Smart Contract for Burger Ordering System
 
-contract SmartContract {
+This Solidity smart contract provides functionalities for placing orders in a burger ordering system.
 
-  uint public orderCount;
+## Functions
 
-  struct Order{
+### placeOrder
+
+```solidity
+function placeOrder(uint burgerSelection) public payable returns(uint)
+Allows clients to place an order by sending Ether along with the order details. Requires at least 1 Ether to be sent as payment.
+
+Parameters:
+burgerSelection: An integer representing the type of burger selected by the client.
+Returns:
+uint: The order number assigned to the placed order.
+delivered
+function delivered(uint orderNumber) public
+Marks the specified order as delivered.
+
+Parameters:
+orderNumber: The unique identifier of the order to be marked as delivered.
+Data Structures
+Order
+struct Order {
     address client;
     uint burgerSelection;
     bool delivered; 
-  }
-
-  mapping(uint => Order) public orders;
-
-  function placeOrderOld(uint burgerSelection) public payable returns(uint){
-    if(msg.value >= 1 ether){
-      Order memory newOrder = Order(msg.sender, burgerSelection, false);
-      orderCount++;
-      orders[orderCount] = newOrder;
-    }
-    else{
-      revert("Payment amount is not met.");
-    }
-    return orderCount;
-  }
-
-
-  function placeOrder(uint burgerSelection) public payable returns(uint){
-    require(msg.value >= 1 ether);
-   
-      Order memory newOrder = Order(msg.sender, burgerSelection, false);
-      orderCount++;
-      orders[orderCount] = newOrder;
-    
-    return orderCount;
-  }
-
-  function delivered(uint orderNumber) public {
-    orders[orderNumber].delivered = true;
-    assert(orders[orderNumber].delivered == true);
-  }
 }
+Represents an order placed by a client, containing the client's address, the selected burger type, and a boolean flag indicating whether the order has been delivered or not.
+Usage
+Deploy the SmartContract.sol on an Ethereum blockchain network.
+Interact with the contract using a compatible Ethereum wallet or development environment.
+This README file provides an overview of the functionalities offered by the smart contract, along with instructions on how to use it. You can use it to document your contract and share it with others.
