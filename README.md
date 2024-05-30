@@ -1,33 +1,43 @@
-# Smart Contract README
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.6.12 <0.9.0;
 
-## Overview
+contract SmartContract {
 
-This Solidity smart contract, named SmartContract, provides basic functionalities for minting and burning tokens. It also includes functionality for querying balances of addresses.
+  uint public orderCount;
 
-## Contract Details
+  struct Order{
+    address client;
+    uint burgerSelection;
+    bool delivered; 
+  }
 
-### Public Variables
+  mapping(uint => Order) public orders;
 
-1. **Name**: A public variable representing the name of the contract. It is initialized with the value "Xarb".
+  function placeOrderOld(uint burgerSelection) public payable returns(uint){
+    if(msg.value >= 1 ether){
+      Order memory newOrder = Order(msg.sender, burgerSelection, false);
+      orderCount++;
+      orders[orderCount] = newOrder;
+    }
+    else{
+      revert("Payment amount is not met.");
+    }
+    return orderCount;
+  }
 
-2. **Abbrv**: A public variable representing an abbreviation for the contract. It is initialized with the value "Daniel".
 
-3. **TotalMoney**: A public variable representing the total amount of money in the contract. It is initialized with the value 0.
+  function placeOrder(uint burgerSelection) public payable returns(uint){
+    require(msg.value >= 1 ether);
+   
+      Order memory newOrder = Order(msg.sender, burgerSelection, false);
+      orderCount++;
+      orders[orderCount] = newOrder;
+    
+    return orderCount;
+  }
 
-### Mapping Variables
-
-1. **balances**: A mapping variable that maps addresses to their respective balances. It stores the balance of each address in the contract.
-
-### Functions
-
-1. **mint**: A function used to mint new tokens. It increases the total money in the contract and updates the balance of the specified address.
-
-    - Parameters:
-        - `_address`: The address to which tokens will be minted.
-        - `_value`: The amount of tokens to mint.
-
-2. **burn**: A function used to burn tokens. It decreases the total money in the contract and updates the balance of the specified address, if the address has sufficient tokens.
-
-    - Parameters:
-        - `_address`: The address from which tokens will be burned.
-        - `_value`: The amount of tokens to burn.
+  function delivered(uint orderNumber) public {
+    orders[orderNumber].delivered = true;
+    assert(orders[orderNumber].delivered == true);
+  }
+}
