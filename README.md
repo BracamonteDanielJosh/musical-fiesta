@@ -1,43 +1,23 @@
-// SPDX-License-Identifier: MIT
-pragma solidity >=0.6.12 <0.9.0;
+SmartContract
+Overview
+This Solidity smart contract facilitates the placement and tracking of burger orders on the Ethereum blockchain. It allows users to place orders, track delivery status, and ensures payments meet a minimum requirement.
 
-contract SmartContract {
+Features
+Order Placement: Users can place orders by specifying the type of burger they want.
+Payment Validation: Orders require a minimum payment of 1 ether to be processed.
+Delivery Tracking: Orders can be marked as delivered, updating their delivery status.
+Usage
+Placing an Order
+To place an order, call the placeOrder function, providing the desired burger selection as a parameter. Ensure that the transaction includes a payment of at least 1 ether.
 
-  uint public orderCount;
+solidity
+Copy code
+function placeOrder(uint burgerSelection) public payable returns(uint)
+Marking an Order as Delivered
+Once an order has been delivered, call the delivered function, passing the order number as a parameter. This updates the delivery status of the specified order.
 
-  struct Order{
-    address client;
-    uint burgerSelection;
-    bool delivered; 
-  }
-
-  mapping(uint => Order) public orders;
-
-  function placeOrderOld(uint burgerSelection) public payable returns(uint){
-    if(msg.value >= 1 ether){
-      Order memory newOrder = Order(msg.sender, burgerSelection, false);
-      orderCount++;
-      orders[orderCount] = newOrder;
-    }
-    else{
-      revert("Payment amount is not met.");
-    }
-    return orderCount;
-  }
-
-
-  function placeOrder(uint burgerSelection) public payable returns(uint){
-    require(msg.value >= 1 ether);
-   
-      Order memory newOrder = Order(msg.sender, burgerSelection, false);
-      orderCount++;
-      orders[orderCount] = newOrder;
-    
-    return orderCount;
-  }
-
-  function delivered(uint orderNumber) public {
-    orders[orderNumber].delivered = true;
-    assert(orders[orderNumber].delivered == true);
-  }
-}
+solidity
+Copy code
+function delivered(uint orderNumber) public
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
