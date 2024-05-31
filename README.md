@@ -1,34 +1,23 @@
-# Smart Contract for Burger Ordering System
+# Burger Order Smart Contract
 
-This Solidity smart contract provides functionalities for placing orders in a burger ordering system.
+## Description
+The Burger Order Smart Contract is a Solidity smart contract designed to facilitate burger orders on the blockchain. It allows users to place orders by specifying their burger selection and making a payment in ether. Each order is recorded on the blockchain and can be marked as delivered when completed.
 
-## Functions
+## Getting Started
 
-### placeOrder
+### Installing
+To use the smart contract, you need a compatible Ethereum development environment. You can download or clone the contract file and deploy it using tools like Remix or Truffle.
 
-```solidity
-function placeOrder(uint burgerSelection) public payable returns(uint)
-Allows clients to place an order by sending Ether along with the order details. Requires at least 1 Ether to be sent as payment.
+### Executing program
+1. Deploy the SmartContract.sol file on your Ethereum development environment.
+2. Interact with the contract using a wallet or an Ethereum development tool.
+3. Call the `placeOrder` function with the desired burger selection and a payment of at least 1 ether to place an order.
+4. Call the `delivered` function with the order number to mark an order as delivered.
 
-Parameters:
-burgerSelection: An integer representing the type of burger selected by the client.
-Returns:
-uint: The order number assigned to the placed order.
-delivered
-function delivered(uint orderNumber) public
-Marks the specified order as delivered.
+## Help
+If you encounter any issues, ensure that your Ethereum environment is properly configured and that you're interacting with the contract using the correct function parameters.
 
-Parameters:
-orderNumber: The unique identifier of the order to be marked as delivered.
-Data Structures
-Order
-struct Order {
-    address client;
-    uint burgerSelection;
-    bool delivered; 
-}
-Represents an order placed by a client, containing the client's address, the selected burger type, and a boolean flag indicating whether the order has been delivered or not.
-Usage
-Deploy the SmartContract.sol on an Ethereum blockchain network.
-Interact with the contract using a compatible Ethereum wallet or development environment.
-This README file provides an overview of the functionalities offered by the smart contract, along with instructions on how to use it. You can use it to document your contract and share it with others.
+
+
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details.
